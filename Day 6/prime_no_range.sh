@@ -1,19 +1,21 @@
-#!/bin/bash
-echo enter m and n
-read m n
-for a in $(seq $m $n)
+#!/bin/bash -x
+read -p "Enter the range " m n;
+echo "Prime numbers between $m and $n are: "
+for(( i=$m;i<=$n;i++ ))
 do
-    k=0
-    for i in $(seq 2 $(expr $a - 1))
-    do
-        if [ $(expr $a % $i) -eq 0 ]
-        then
-            k=1
-            break
-        fi
-    done
-    if [ $k -eq 0 ]
-    then
-    echo $a
-    fi
+	for(( j=2;j<$i;j++ ))
+	do
+		if [[ $(( $i%$j )) -eq 0 ]]
+		then
+			count=$(( $count+1 ));
+		else
+			count=$count;
+		fi
+	done
+	if [[ $count -eq 0 ]]
+	then
+		echo $i;
+	fi
+	count=0;
 done
+
