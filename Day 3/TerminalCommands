@@ -1,0 +1,118 @@
+Question 1 Move files from one folder to the respective folders.
+
+Solution: for file in `ls *.txt`; 
+	  do 
+	 	 foldername= `echo $file | awk -F. '{print $1}'`; 
+	  	 rm -r $foldername; 
+         	 mkdir $foldername ; 
+                 mv $file $foldername; 
+         done
+
+Question 2 Append Date to the file name 
+
+Solution : #!/bin/bash
+ 
+	   file_name=abc.log.1
+ 
+	   current_time=$(date "+%Y.%m.%d")
+	   echo "Current Time : $current_time"
+ 
+	   new_fileName=$file_name.$current_time
+	   echo "New FileName: " "$new_fileName"
+	   
+Question 3 Check The folder Exist of Not
+
+Solution : #!/bin/bash
+        	folder=$((RANDOM%2))
+        	if [ $folder == 1 ]
+        	then
+                	echo " folder exist already "
+        	else
+                	mkdir  abc
+	        fi
+	        
+Question 4 Execute command "hello" and "ls"
+
+solution : #!/bin/bash
+
+	        command1=`hello`
+            if [ $? == 0 ]
+            then
+	                echo "command executed"
+            else
+	                echo -e "hello"
+	        echo "command not execute"
+            fi
+
+            command2=`ls`
+            if [ $? == 0 ]
+            then
+	                echo -e "ls"
+                    echo "command executed "
+            else
+                    echo "command not execute"
+            fi
+
+Question 5 Set Envirement usersecret=dH34xJaa23 if already not set 
+
+Solution : #!/bin/bash -x
+
+        if [ usersecret == dH34xJaa23 ]
+        then
+                echo "value assigned already" $usersecret
+        else
+                usersecret=dH34xJaa23
+                echo " value assigned" $usersecret
+        fi
+
+Question 6 Find word "systemd" from all log files 
+
+solutuion : #! /bin/bash
+            for log in `ls /var/log/*.log`
+            do
+	                find=`grep -c 'systemd' $log`
+	                if [ $count -gt 0 ]
+	                then
+		            echo $find
+	        fi
+            done
+
+Question 7 Create processlist table displays process id, parent process id, command name,% of memory consumption,% of cpu utilization
+
+Solution:
+            #! /bin/bash
+            ps -o pid,ppid,cmd,%mem,pcpu
+
+Question 8 Print Client Ip From file Access.log
+
+Solution: cat access.log | awk '{print $11}' | grep -v '"-"' | sort | uniq -c | sort -nr | head -4
+
+		
+Question 8 Print Last 4 URL in Sorted Order
+
+Solution : cat access.log | awk '{print $15 }' | tail -4 | sort
+	   wc -l
+
+Question 9 Print last 4 URL In unique order
+
+Solution :  cat access.log | awk '{print $15 unique }' | tail -4 | uniq
+
+
+Question 10 Print Last 4 responce code in sorted order 
+
+Solution : cat access.log | awk '{print $9}' | sort | uniq -c | sort -nr | head -4
+
+
+Question 11 Data analysis / manipulation (Awk)
+Solution:
+
+        #! /bin/bash
+        1) print EmployeeName and TotalPay who has BasePAy grater than 10000
+            cat data.csv | awk '{if($4>10000) print $2" : "$4}'
+        2) What is the aggregate otalPay of employees w  hoose jobtitle is CAPTAIN
+        cat data.csv | awk '{if($3=="CAPTAIN")sum += $7}END{print "Aggregat Pay : "sum}'
+
+        3) Print JobTitle and OverTimepay who has Ovevrtime is between 7000 and 10000
+        cat data.csv | awk '{if($5>7000 && $5<10000) print $3" "$5}'
+        4) Print average BasePay
+        cat data.csv | awk '{sum += $4; cnt +=1}END {print sum/cnt}'
